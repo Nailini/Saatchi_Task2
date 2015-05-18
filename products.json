@@ -1,0 +1,14 @@
+{
+    "ans1": {
+        "name": "Zielony",
+        "link": "#linkzielony"
+    },
+    "ans2": {
+        "name": "Czerwony",
+        "link": "#linkczerwony"
+    },
+    "ans3": {
+        "name": "Niebieski",
+        "link": "#linkniebieski"
+    }
+}

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <style>
+        #your_product { display: none; }
+    </style>
+</head>
+<body>
+<form id="product_selector">
+    <h2>Pytanie 1</h2>
+    <select name="question1">
+        <option value="ans1">Odpowiedź 1</option>
+        <option value="ans2">Odpowiedź 2</option>
+        <option value="ans3">Odpowiedź 3</option>
+    </select>
+
+    <h2>Pytanie 2</h2>
+    <select name="question2">
+        <option value="ans1">Odpowiedź 1</option>
+        <option value="ans2">Odpowiedź 2</option>
+        <option value="ans3">Odpowiedź 3</option>
+    </select>
+
+    <h2>Pytanie 3</h2>
+    <select name="question3">
+        <option value="ans1">Odpowiedź 1</option>
+        <option value="ans2">Odpowiedź 2</option>
+        <option value="ans3">Odpowiedź 3</option>
+    </select>
+
+    <h2>Pytanie 4</h2>
+    <select name="last_question">
+        <option value="ans1">Odpowiedź 1</option>
+        <option value="ans2">Odpowiedź 2</option>
+        <option value="ans3">Odpowiedź 3</option>
+    </select>
+
+    <input type="submit"/>
+</form>
+
+<div id="your_product">
+    <h1 id="product_name"></h1>
+
+    <a id="product_link" href="#">Czytaj więcej</a>
+</div>
+
+<script>
+    var form = $("#product_selector"),
+            products;
+
+    $.getJSON("products.json", function(res) {
+        products = res;
+    });
+
+    form.on("submit", function(e) {
+        var serializedResults = form.serializeArray(),
+                results = {"ans1": 0, "ans2": 0, "ans3": 0};
+
+        for (var i=0; i<3; i++) {
+            var resultValue = serializedResults[i].value;
+
+            results[ resultValue ]++;
+        }
+
+        if (results["ans1"]===1 && results["ans2"]===1 && results["ans3"]===1) {
+            showResults(serializedResults[3].value)
+        } else {
+            if (results["ans1"]>results["ans2"] && results["ans1"]>results["ans3"]) {
+                showResults("ans1");
+            }
+            if (results["ans2"]>results["ans1"] && results["ans2"]>results["ans3"]) {
+                showResults("ans2");
+            }
+            if (results["ans3"]>results["ans1"] && results["ans3"]>results["ans2"]) {
+                showResults("ans3");
+            }
+        }
+
+        return false;
+    });
+
+    function showResults(answer) {
+        console.log(products[answer]);
+
+        // TODO
+        $("#product_name").text(products[answer].name)
+        $("#product_link").attr("href",products[answer].link)
+
+        $("#product_selector").hide();
+        $("#your_product").show();
+    }
+</script>
+</body>
+</html>
