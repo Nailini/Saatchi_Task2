@@ -12,6 +12,7 @@
 <form id="product_selector">
     <h2>Pytanie 1</h2>
     <select name="question1">
+        <option value="no_ans">Wybierz..</option>
         <option value="ans1">Odpowiedź 1</option>
         <option value="ans2">Odpowiedź 2</option>
         <option value="ans3">Odpowiedź 3</option>
@@ -19,6 +20,7 @@
 
     <h2>Pytanie 2</h2>
     <select name="question2">
+        <option value="no_ans">Wybierz..</option>
         <option value="ans1">Odpowiedź 1</option>
         <option value="ans2">Odpowiedź 2</option>
         <option value="ans3">Odpowiedź 3</option>
@@ -26,6 +28,7 @@
 
     <h2>Pytanie 3</h2>
     <select name="question3">
+        <option value="no_ans">Wybierz..</option>
         <option value="ans1">Odpowiedź 1</option>
         <option value="ans2">Odpowiedź 2</option>
         <option value="ans3">Odpowiedź 3</option>
@@ -33,6 +36,7 @@
 
     <h2>Pytanie 4</h2>
     <select name="last_question">
+        <option value="no_ans">Wybierz..</option>
         <option value="ans1">Odpowiedź 1</option>
         <option value="ans2">Odpowiedź 2</option>
         <option value="ans3">Odpowiedź 3</option>
@@ -58,6 +62,10 @@
     form.on("submit", function(e) {
         var serializedResults = form.serializeArray(),
                 results = {"ans1": 0, "ans2": 0, "ans3": 0};
+
+        if (serializedResults[0].value === "no_ans" || serializedResults[1].value === "no_ans" || serializedResults[2].value === "no_ans" || serializedResults[3].value === "no_ans") {
+            alert("Brak odpowiedzi na wszystkie pytania");
+        return false}
 
         for (var i=0; i<3; i++) {
             var resultValue = serializedResults[i].value;
